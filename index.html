@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rentabilidad de amoblado de departamentos en Lima</title>
+<meta name="description" content="¿Cuánto deja un proyecto de amoblado de S/ 28,000? Calculadora, desglose de costos, volumen realista, competencia y catálogo temático.">
+<meta property="og:title" content="¿Cuánto deja un proyecto de amoblado de S/ 28,000?">
+<meta property="og:description" content="Análisis de rentabilidad de un negocio de amoblado llave en mano en Lima, con calculadora interactiva.">
+<meta name="theme-color" content="#0F172A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232563EB'/%3E%3Cpath d='M8 22V12l8-5 8 5v10' fill='none' stroke='white' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: informe profesional de una columna (max 1080px) con barra de navegación fija; respuesta → calculadora → bloques cortos → metodología */
+:root{
+  color-scheme:light;
+  --bg:#F8FAFC; --surface:#FFFFFF; --surface-2:#F1F5F9; --ink:#0F172A; --ink-2:#334155; --muted:#64748B; --border:#E2E8F0;
+  --primary:#2563EB; --primary-soft:#EFF4FF; --on-primary:#FFFFFF;
+  --pos:#15803D; --pos-soft:#ECFDF3; --neg:#B91C1C; --neg-soft:#FEF2F2; --warn:#B45309; --warn-soft:#FFFBEB;
+  --c-igv:#7C3AED; --c-muebles:#2563EB; --c-deco:#60A5FA; --c-ads:#F59E0B; --c-otros:#94A3B8; --c-fijos:#475569; --c-imp:#DB2777; --c-gan:#16A34A;
+  --shadow:0 1px 2px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.06);
+  --font:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#0B1120; --surface:#111827; --surface-2:#1E293B; --ink:#F1F5F9; --ink-2:#CBD5E1; --muted:#94A3B8; --border:#1E293B;
+  --primary:#60A5FA; --primary-soft:#172554; --on-primary:#0B1120;
+  --pos:#4ADE80; --pos-soft:#052E16; --neg:#F87171; --neg-soft:#3B0D0D; --warn:#FBBF24; --warn-soft:#3A2A06;
+  --c-igv:#A78BFA; --c-muebles:#3B82F6; --c-deco:#93C5FD; --c-ads:#FBBF24; --c-otros:#64748B; --c-fijos:#94A3B8; --c-imp:#F472B6; --c-gan:#22C55E;
+  --shadow:none}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0B1120; --surface:#111827; --surface-2:#1E293B; --ink:#F1F5F9; --ink-2:#CBD5E1; --muted:#94A3B8; --border:#1E293B;
+  --primary:#60A5FA; --primary-soft:#172554; --on-primary:#0B1120;
+  --pos:#4ADE80; --pos-soft:#052E16; --neg:#F87171; --neg-soft:#3B0D0D; --warn:#FBBF24; --warn-soft:#3A2A06;
+  --c-igv:#A78BFA; --c-muebles:#3B82F6; --c-deco:#93C5FD; --c-ads:#FBBF24; --c-otros:#64748B; --c-fijos:#94A3B8; --c-imp:#F472B6; --c-gan:#22C55E;
+  --shadow:none}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+.skip{position:absolute;left:-999px;top:8px;background:var(--surface);padding:8px 12px;border-radius:6px;z-index:100}
+.skip:focus{left:16px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.icon{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(8px);-webkit-backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--border)}
+.nav-in{max-width:1080px;margin:0 auto;padding-inline:20px;height:60px;display:flex;align-items:center;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);white-space:nowrap}
+.brand:hover{text-decoration:none}
+.logo{width:28px;height:28px;border-radius:7px;background:var(--primary);display:grid;place-items:center;color:var(--on-primary)}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav ul a{display:block;padding:8px 12px;border-radius:8px;color:var(--ink-2);font-size:.92rem;font-weight:500;white-space:nowrap;transition:background .15s,color .15s}
+.nav ul a:hover{background:var(--surface-2);color:var(--ink);text-decoration:none}
+
+main{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:40px 72px;display:grid;gap:56px}
+section{display:grid;gap:20px;min-width:0}
+.sec-head{display:grid;gap:6px;max-width:68ch}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--primary)}
+h1{font-size:clamp(2rem,4.6vw,2.9rem);font-weight:700}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.05rem;font-weight:600}
+.lead{font-size:1.15rem;color:var(--ink-2);max-width:62ch}
+.sub{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:24px;min-width:0}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;display:grid;gap:6px;min-width:0;border-top:3px solid var(--border)}
+.kpi .label{font-size:.85rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px}
+.kpi .value{font-family:var(--mono);font-size:1.75rem;font-weight:600;line-height:1.2;overflow-wrap:anywhere}
+.kpi .note{font-size:.9rem;color:var(--muted)}
+.kpi.neg{border-top-color:var(--neg)} .kpi.neg .value{color:var(--neg)} .kpi.neg .value s{text-decoration-thickness:2px}
+.kpi.pos{border-top-color:var(--pos)} .kpi.pos .value{color:var(--pos)}
+.kpi.pri{border-top-color:var(--primary)} .kpi.pri .value{color:var(--primary)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.8rem;font-weight:600}
+.pill.neg{background:var(--neg-soft);color:var(--neg)} .pill.pos{background:var(--pos-soft);color:var(--pos)} .pill.warn{background:var(--warn-soft);color:var(--warn)}
+
+/* Calculadora */
+.calc{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:0;padding:0;overflow:hidden}
+.calc-in{padding:24px;display:grid;gap:18px;align-content:start;background:var(--surface-2);border-right:1px solid var(--border)}
+.field{display:grid;gap:6px}
+.field label,.field .lbl{font-size:.85rem;font-weight:600;color:var(--ink-2)}
+.field .help{font-size:.8rem;color:var(--muted)}
+.input{width:100%;min-height:44px;font:inherit;font-family:var(--mono);padding:0 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);transition:border-color .15s}
+.input:hover{border-color:var(--muted)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:9px;background:var(--surface);border:1px solid var(--border)}
+.seg button{min-height:36px;font:inherit;font-size:.9rem;font-weight:500;border:0;border-radius:6px;background:transparent;color:var(--ink-2);cursor:pointer;transition:background .15s,color .15s}
+.seg button:hover{background:var(--surface-2)}
+.seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);font-weight:600}
+.seg.three{grid-template-columns:repeat(3,1fr)}
+input[type=range]{width:100%;accent-color:var(--primary);min-height:28px;cursor:pointer}
+.rv{font-family:var(--mono);color:var(--primary);font-weight:600}
+
+.calc-out{padding:24px;display:grid;gap:22px;align-content:start;min-width:0}
+.headline{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.headline .label{font-size:.85rem;font-weight:600;color:var(--muted)}
+.headline .value{font-family:var(--mono);font-size:2.6rem;font-weight:600;line-height:1.1}
+.headline .value.pos{color:var(--pos)} .headline .value.neg{color:var(--neg)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--border);border-radius:8px}
+.stat{padding:12px 14px;min-width:0}
+.stat+.stat{border-left:1px solid var(--border)}
+.stat .label{font-size:.78rem;color:var(--muted);font-weight:500}
+.stat .value{font-family:var(--mono);font-weight:600;font-size:1.05rem;overflow-wrap:anywhere}
+
+.money{display:grid;gap:12px}
+.money h3 span{font-family:var(--mono)}
+.bar{display:flex;height:40px;border-radius:8px;overflow:hidden;background:var(--surface-2)}
+.bar div{height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:600;font-family:var(--mono);overflow:hidden;white-space:nowrap;transition:width .25s ease-out}
+.bar div+div{border-left:1px solid var(--surface)}
+.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px;font-size:.9rem}
+.legend div{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px dashed var(--border);min-width:0}
+.legend i{flex:none;width:10px;height:10px;border-radius:2px}
+.legend b{margin-left:auto;font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums}
+.legend .gan{font-weight:600}
+
+/* Escala */
+.scale{position:relative;height:168px}
+.track{position:absolute;left:0;right:0;bottom:24px;height:1px;background:var(--border)}
+.tick{position:absolute;bottom:0;font-family:var(--mono);font-size:.75rem;color:var(--muted);transform:translateX(-50%)}
+.tick::before{content:"";position:absolute;left:50%;bottom:20px;width:1px;height:8px;background:var(--border)}
+.rng{position:absolute;height:28px;border-radius:6px;display:flex;align-items:center;padding:0 10px;font-size:.82rem;font-weight:600;white-space:nowrap;overflow:hidden}
+.rng.a{background:var(--primary-soft);color:var(--primary)}
+.rng.b{background:var(--pos-soft);color:var(--pos)}
+.rng.c{background:var(--warn-soft);color:var(--warn)}
+.rng.d{background:var(--neg-soft);color:var(--neg)}
+.callout{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:8px;background:var(--primary-soft);color:var(--ink-2)}
+.callout .icon{color:var(--primary);margin-top:3px}
+.callout b{color:var(--ink)}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.checks li{display:flex;gap:10px;align-items:flex-start}
+.checks .icon{margin-top:3px}
+.checks.ok .icon{color:var(--pos)}
+.checks.risk .icon{color:var(--warn)}
+.card h3{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.prod{padding:18px;display:grid;gap:4px;align-content:start}
+.prod .p{font-family:var(--mono);font-weight:600;color:var(--primary);font-size:1.05rem}
+.prod .d{font-size:.88rem;color:var(--muted)}
+.badge{justify-self:start;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:var(--surface-2);color:var(--muted);margin-bottom:6px}
+.badge.main{background:var(--primary-soft);color:var(--primary)}
+
+.tbl{overflow-x:auto;padding:0}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+th{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:var(--surface-2)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);white-space:nowrap}
+tr.hl td:first-child{box-shadow:inset 3px 0 0 var(--primary)}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:14px;padding:16px 18px}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-weight:700;font-family:var(--mono)}
+.steps .d{color:var(--muted);font-size:.92rem}
+
+details{padding:0}
+details summary{cursor:pointer;list-style:none;padding:18px 24px;font-weight:600;display:flex;align-items:center;gap:10px}
+details summary::-webkit-details-marker{display:none}
+details summary .chev{margin-left:auto;transition:transform .2s}
+details[open] summary .chev{transform:rotate(180deg)}
+details .body{padding:0 24px 22px;display:grid;gap:14px;color:var(--ink-2);font-size:.93rem}
+details ul{margin:0;padding-left:1.1rem;display:grid;gap:6px;overflow-wrap:anywhere}
+
+footer{border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+footer .in{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:24px}
+
+@media (max-width:900px){
+  .products{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .calc{grid-template-columns:minmax(0,1fr)}
+  .calc-in{border-right:0;border-bottom:1px solid var(--border)}
+}
+@media (max-width:640px){
+  .kpis,.grid2,.legend{grid-template-columns:minmax(0,1fr)}
+  .products{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:minmax(0,1fr)}
+  .stat+.stat{border-left:0;border-top:1px solid var(--border)}
+  .headline .value{font-size:2.1rem}
+  .nav ul{display:none}
+  main{gap:44px}
+  .card,.calc-in,.calc-out{padding:18px}
+  .bar div span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Ir al contenido</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></symbol>
+</svg>
+
+<nav class="nav" aria-label="Secciones">
+  <div class="nav-in">
+    <a class="brand" href="#inicio"><span class="logo"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 20V10l8-6 8 6v10"/></svg></span>Amoblado Lima</a>
+    <ul>
+      <li><a href="#calculadora">Calculadora</a></li>
+      <li><a href="#volumen">Volumen</a></li>
+      <li><a href="#tematico">Temático</a></li>
+      <li><a href="#competencia">Competencia</a></li>
+      <li><a href="#pasos">Próximos pasos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="contenido">
+
+<section id="inicio">
+  <div class="sec-head">
+    <span class="eyebrow">Análisis de rentabilidad · Octubre 2026</span>
+    <h1>¿Cuánto deja un proyecto de amoblado de S/&nbsp;28,000?</h1>
+    <p class="lead">Lo realista es ganar entre <b>S/ 2,400 y S/ 6,600</b> por proyecto, no S/ 10,000. Aun así es un negocio sano: con <b>2 o 3 proyectos al mes</b> ya cubre sus gastos.</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi neg">
+      <span class="label"><svg class="icon"><use href="#i-x"/></svg>Lo que se esperaba</span>
+      <span class="value"><s>S/ 10,000</s></span>
+      <span class="note">por proyecto, con 2 a 4 proyectos por semana</span>
+    </div>
+    <div class="kpi pos">
+      <span class="label"><svg class="icon"><use href="#i-check"/></svg>Escenario realista</span>
+      <span class="value">S/ 2.4k – 6.6k</span>
+      <span class="note">por proyecto, con 2 a 5 proyectos al mes en el año 1</span>
+    </div>
+    <div class="kpi pri">
+      <span class="label"><svg class="icon"><use href="#i-trend"/></svg>Punto de equilibrio</span>
+      <span class="value">2–3 / mes</span>
+      <span class="note">proyectos para cubrir los gastos fijos</span>
+    </div>
+  </div>
+</section>
+
+<section id="calculadora">
+  <div class="sec-head">
+    <span class="eyebrow">Calculadora</span>
+    <h2>Prueba con tus propios números</h2>
+    <p class="sub">Ajusta los valores y el resultado se actualiza al instante.</p>
+  </div>
+  <div class="card calc">
+    <div class="calc-in">
+      <div class="field">
+        <label for="precio">Precio por proyecto (S/)</label>
+        <input class="input" type="number" id="precio" value="28000" step="500" min="5000" inputmode="numeric">
+      </div>
+      <div class="field">
+        <span class="lbl" id="igv-l">¿El precio incluye IGV?</span>
+        <div class="seg" role="group" aria-labelledby="igv-l">
+          <button type="button" data-igv="1" aria-pressed="true">Sí, incluido</button>
+          <button type="button" data-igv="0" aria-pressed="false">No, aparte</button>
+        </div>
+        <span class="help">Si se cobra aparte, el cliente paga 18% más.</span>
+      </div>
+      <div class="field">
+        <label for="n">Proyectos al mes: <span class="rv" id="n-val">4</span></label>
+        <input type="range" id="n" min="1" max="16" value="4">
+      </div>
+      <div class="field">
+        <span class="lbl" id="esc-l">Nivel de costos</span>
+        <div class="seg three" role="group" aria-labelledby="esc-l">
+          <button type="button" data-esc="opt" aria-pressed="false">Bajos</button>
+          <button type="button" data-esc="base" aria-pressed="true">Normales</button>
+          <button type="button" data-esc="pes" aria-pressed="false">Altos</button>
+        </div>
+        <span class="help" id="esc-help"></span>
+      </div>
+    </div>
+    <div class="calc-out" aria-live="polite">
+      <div class="headline">
+        <div><div class="label">Ganancia neta del mes</div><div class="value" id="o-mes">—</div></div>
+        <span class="pill" id="o-status">—</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="label">Por proyecto</div><div class="value" id="o-proy">—</div></div>
+        <div class="stat"><div class="label">Ventas del mes</div><div class="value" id="o-ventas">—</div></div>
+        <div class="stat"><div class="label">Mínimo para no perder</div><div class="value" id="o-be">—</div></div>
+      </div>
+      <div class="money">
+        <h3>¿A dónde va cada proyecto de <span id="o-precio">S/ 28,000</span>?</h3>
+        <div class="bar" id="bar" role="img" aria-label="Distribución del precio de un proyecto"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </div>
+  <p class="sub" style="font-size:.88rem">Gastos fijos de S/ 16,560 al mes (diseñador, coordinador, showroom, almacén, contador, contenido). No incluye sueldo de los socios: la ganancia es lo que queda para ellos.</p>
+</section>
+
+<section id="volumen">
+  <div class="sec-head">
+    <span class="eyebrow">Volumen</span>
+    <h2>¿Se pueden hacer 2 a 4 proyectos por semana?</h2>
+    <p class="sub">No al inicio. En Lima se hacen unos 400–1,000 proyectos de este tipo al año. Hacer 16 al mes sería quedarse con casi la mitad del mercado.</p>
+  </div>
+  <div class="card">
+    <div class="scale" id="scale">
+      <div class="rng a" style="left:0;width:calc(100%*2.3/16);top:0">no perder</div>
+      <div class="rng b" style="left:calc(100%*2/16);width:calc(100%*3/16);top:34px">año 1: 2–5</div>
+      <div class="rng c" style="left:calc(100%*5/16);width:calc(100%*5/16);top:68px">año 2: 5–10</div>
+      <div class="rng d" style="left:calc(100%*8/16);width:calc(100%*8/16);top:102px">lo esperado: 8–16 (2–4 por semana)</div>
+      <div class="track"></div>
+    </div>
+    <p class="sub" style="text-align:center;font-size:.82rem;margin-top:4px">Proyectos por mes</p>
+  </div>
+  <div class="callout"><svg class="icon"><use href="#i-info"/></svg><p><b>Para llegar a 2–4 por semana hace falta vender por volumen:</b> una inmobiliaria que entregue departamentos amoblados o un administrador de Airbnb que equipe muchas unidades por edificio.</p></div>
+</section>
+
+<section id="tematico">
+  <div class="sec-head">
+    <span class="eyebrow">Diferencial</span>
+    <h2>Catálogo temático: tech, gamer, otaku</h2>
+    <p class="sub">Es buena idea, pero como extra y no como catálogo principal.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3><svg class="icon" style="color:var(--pos)"><use href="#i-check"/></svg>A favor</h3>
+      <ul class="checks ok">
+        <li><svg class="icon"><use href="#i-check"/></svg>Más de 10 millones de peruanos se consideran gamers.</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>En Lima nadie vende un cuarto gamer diseñado e instalado.</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Se vende fácil en TikTok e Instagram.</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Los Airbnb diferentes pueden cobrar más por noche.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><svg class="icon" style="color:var(--warn)"><use href="#i-alert"/></svg>Cuidado</h3>
+      <ul class="checks risk">
+        <li><svg class="icon"><use href="#i-shield"/></svg><span><b>Nada de personajes</b> (Pokémon, Marvel, anime): Indecopi multa y decomisa.</span></li>
+        <li><svg class="icon"><use href="#i-alert"/></svg>Quien paga S/ 28k rara vez quiere todo el depa temático.</li>
+        <li><svg class="icon"><use href="#i-alert"/></svg>Las modas duran 1–3 años: todo debe poder retirarse.</li>
+        <li><svg class="icon"><use href="#i-alert"/></svg>El público gamer gasta S/ 900 en promedio.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="products">
+    <div class="card prod"><span class="badge main">Principal</span><h3>Depa completo</h3><span class="p">S/ 25–30k</span><span class="d">Estilo neutro, llave en mano.</span></div>
+    <div class="card prod"><span class="badge">Entrada</span><h3>Cuarto Gamer</h3><span class="p">S/ 3–9k</span><span class="d">Atrae clientes y contenido.</span></div>
+    <div class="card prod"><span class="badge">Extra</span><h3>Tech Pack</h3><span class="p">+ S/ 2.5–4k</span><span class="d">Luces, Alexa, cerradura inteligente.</span></div>
+    <div class="card prod"><span class="badge">Extra</span><h3>Pack temático</h3><span class="p">S/ 1.5–4k</span><span class="d">Por ambiente, se retira en un día.</span></div>
+  </div>
+</section>
+
+<section id="competencia">
+  <div class="sec-head">
+    <span class="eyebrow">Mercado</span>
+    <h2>La competencia</h2>
+    <p class="sub">El precio de S/ 28k está en línea con el mercado: es lo que cobra PRAVI.</p>
+  </div>
+  <div class="card tbl">
+    <table>
+      <thead><tr><th>Empresa</th><th>Qué hace</th><th class="num">Precio</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><b>PRAVI</b></td><td>Diseño + muebles propios, entrega en 15 días</td><td class="num">S/ 28.9–29.9k</td></tr>
+        <tr><td>CoolHouse</td><td>Diseño + taller propio, pago en cuotas</td><td class="num">S/ 22–38k</td></tr>
+        <tr><td>EIQL</td><td>Solo diseño con renders</td><td class="num">S/ 350–600 / amb.</td></tr>
+        <tr><td>Maison Nova</td><td>Amobla y administra Airbnb</td><td class="num">No publica</td></tr>
+        <tr><td>Moblo (Chile)</td><td>Paquetes de precio fijo por tipo de depa</td><td class="num">S/ 10–23k</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><svg class="icon"><use href="#i-trend"/></svg><p><b>Oportunidad:</b> en Lima nadie publica paquetes de precio fijo ("depa de 1 dormitorio: S/ X"). Moblo lo hace en Chile.</p></div>
+</section>
+
+<section id="pasos">
+  <div class="sec-head">
+    <span class="eyebrow">Plan</span>
+    <h2>Próximos pasos</h2>
+  </div>
+  <ol class="steps">
+    <li class="card"><div><b>Decidir si el precio incluye IGV.</b><div class="d">Es lo que más cambia la ganancia: hasta S/ 4,271 por proyecto.</div></div></li>
+    <li class="card"><div><b>Cotizar con 3 talleres el mismo depa de 2 dormitorios.</b><div class="d">Con factura. Así los costos dejan de ser estimados.</div></div></li>
+    <li class="card"><div><b>Invertir S/ 1,000–2,000 en anuncios antes de abrir un showroom.</b><div class="d">Sirve para medir cuántos interesados llegan y cuántos compran.</div></div></li>
+    <li class="card"><div><b>Lanzar el Cuarto Gamer y paquetes de precio fijo.</b><div class="d">Generan fotos, contenido y los primeros clientes.</div></div></li>
+    <li class="card"><div><b>Buscar una inmobiliaria o un administrador de Airbnb.</b><div class="d">Es el único camino para hacer varios proyectos por semana.</div></div></li>
+  </ol>
+</section>
+
+<section id="metodologia">
+  <details class="card">
+    <summary><svg class="icon"><use href="#i-book"/></svg>Supuestos y fuentes<svg class="icon chev"><use href="#i-chev"/></svg></summary>
+    <div class="body">
+      <ul>
+        <li><b>Costos por proyecto (normales):</b> muebles S/ 9,000; decoración S/ 2,500; flete S/ 900; comisión de venta S/ 1,000; publicidad S/ 1,500; tarjeta, garantías e IGV no recuperable S/ 1,700. Total con costos bajos: S/ 11,440. Con costos altos: S/ 24,250.</li>
+        <li><b>Gastos fijos:</b> S/ 16,560 al mes hasta 5 proyectos. Se suma un diseñador cada 5 proyectos y un coordinador cada 8.</li>
+        <li><b>Impuesto a la renta:</b> Régimen MYPE Tributario, 10% hasta S/ 82,500 de utilidad anual y 29.5% sobre el exceso (UIT 2026 = S/ 5,500).</li>
+        <li><b>Qué es estimado:</b> costos de taller, publicidad y tamaño del mercado. Los precios de la competencia, los impuestos y los datos de mercado tienen fuente pública.</li>
+      </ul>
+      <ul>
+        <li>PRAVI: <a href="https://proyectos.pravi.pe" target="_blank" rel="noopener">proyectos.pravi.pe</a> · Competencia: <a href="https://coolhouseperu.com/empresas-de-diseno-de-interiores-con-mejor-presupuesto-en-peru/" target="_blank" rel="noopener">CoolHouse</a>, <a href="https://www.eiql.com.pe/diseno-interior-para-casas-cuanto-cuesta-peru-2020/" target="_blank" rel="noopener">EIQL</a>, <a href="https://www.maisonnovabnb.com/implementacion-departamentos-airbnb/" target="_blank" rel="noopener">Maison Nova</a>, <a href="https://moblo.cl/" target="_blank" rel="noopener">Moblo</a></li>
+        <li>Mercado: <a href="https://forbes.pe/negocios/2026-01-27/la-venta-de-viviendas-en-lima-aumento-un-19-en-2025/" target="_blank" rel="noopener">venta de viviendas 2025</a>, <a href="https://airbtics.com/annual-airbnb-revenue-in-lima-peru-es" target="_blank" rel="noopener">Airbnb Lima</a>, <a href="https://www.jlconline.com/remodeling/check-your-vitals-remodeling-benchmarks/" target="_blank" rel="noopener">tasas de cierre</a>, <a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html" target="_blank" rel="noopener">márgenes del sector</a></li>
+        <li>Impuestos: <a href="https://lpderecho.pe/valor-uit-2026-decreto-supremo-301-2025-ef/" target="_blank" rel="noopener">UIT 2026</a>, <a href="https://modelo.pe/blog/regimen-mype-tributario-rmt-2026-tasas-limites/" target="_blank" rel="noopener">Régimen MYPE</a>, <a href="https://kom.pe/izipay-vs-niubiz-vs-culqi/" target="_blank" rel="noopener">comisiones de tarjeta</a></li>
+        <li>Temático: <a href="https://elperuano.pe/noticia/251779-gaming-entre-la-diversion-y-los-negocios" target="_blank" rel="noopener">gamers en Perú</a>, <a href="https://caretas.pe/entretenimiento/cuanto-gastan-los-peruanos-en-articulos-de-gaming" target="_blank" rel="noopener">gasto gamer</a>, <a href="https://www.infobae.com/peru/2025/09/13/marvel-demando-a-negocio-peruano-por-importar-productos-de-spiderman-iron-man-y-otros-heroes-sin-licencia/" target="_blank" rel="noopener">multa de Indecopi</a></li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<footer><div class="in">Modelo simplificado para discusión interna. Las cifras estimadas deben validarse con cotizaciones reales.</div></footer>
+
+<script>
+(function(){
+  var VAR = {
+    opt:  {muebles:7500, deco:1800, ads:700,  flete:500,  comision:700,  otros:240},
+    base: {muebles:9000, deco:2500, ads:1500, flete:900,  comision:1000, otros:1700},
+    pes:  {muebles:11000,deco:3500, ads:3000, flete:1500, comision:1400, otros:3850}
+  };
+  var HELP = {opt:"Talleres baratos y clientes por referidos.", base:"Muebles S/ 9,000, decoración S/ 2,500, publicidad S/ 1,500.", pes:"Muebles caros, mucha publicidad, pagos con tarjeta."};
+  function fijos(n){
+    var dis=Math.max(1,Math.ceil(n/5)), ops=Math.max(1,Math.ceil(n/8));
+    return dis*3500*1.26 + ops*2500*1.26 + 5000 + (n<=8?1500:3000) + 2500;
+  }
+  function renta(a){ if(a<=0) return 0; return 0.10*Math.min(a,82500)+0.295*Math.max(0,a-82500); }
+  function modelo(n,esc,precio,igvInc){
+    var ingreso = igvInc ? precio/1.18 : precio;
+    var c = VAR[esc], v = 0; for (var k in c) v += c[k];
+    var contrib = ingreso-v, f = fijos(n), ub = n*contrib-f, imp = renta(ub*12)/12, un = ub-imp;
+    return {ingreso:ingreso,c:c,v:v,contrib:contrib,f:f,imp:imp,un:un,porProy:un/n,be:contrib>0?f/contrib:null};
+  }
+  function fmt(x){ return (x<0?"−":"")+"S/ "+Math.round(Math.abs(x)).toLocaleString("en-US"); }
+  function $(id){ return document.getElementById(id); }
+  var state = {igv:true, esc:"base"};
+
+  function render(){
+    var precio = Math.max(1000, +$("precio").value || 28000);
+    var n = +$("n").value;
+    $("n-val").textContent = n + (n%4===0 ? " · " + (n/4) + " por semana" : "");
+    $("esc-help").textContent = HELP[state.esc];
+    var r = modelo(n,state.esc,precio,state.igv);
+    $("o-mes").textContent = fmt(r.un);
+    $("o-mes").className = "value " + (r.un>=0?"pos":"neg");
+    $("o-proy").textContent = fmt(r.porProy);
+    $("o-ventas").textContent = fmt(n*(state.igv?precio:precio*1.18));
+    $("o-be").textContent = r.be===null ? "No se alcanza" : Math.ceil(r.be)+" proyectos";
+    var st = $("o-status");
+    if (r.un<0){ st.className="pill neg"; st.innerHTML='<svg class="icon" style="width:14px;height:14px"><use href="#i-x"/></svg>Se pierde dinero'; }
+    else if (r.porProy<4000){ st.className="pill warn"; st.innerHTML='<svg class="icon" style="width:14px;height:14px"><use href="#i-alert"/></svg>Gana, pero poco'; }
+    else { st.className="pill pos"; st.innerHTML='<svg class="icon" style="width:14px;height:14px"><use href="#i-check"/></svg>Buen resultado'; }
+
+    var cliente = state.igv ? precio : precio*1.18;
+    $("o-precio").textContent = fmt(cliente);
+    var parts = [
+      ["IGV (SUNAT)", cliente - r.ingreso, "--c-igv"],
+      ["Muebles de taller", r.c.muebles, "--c-muebles"],
+      ["Decoración", r.c.deco, "--c-deco"],
+      ["Publicidad", r.c.ads, "--c-ads"],
+      ["Flete, comisiones, garantías", r.c.flete+r.c.comision+r.c.otros, "--c-otros"],
+      ["Gastos fijos (prorrateo)", r.f/n, "--c-fijos"],
+      ["Impuesto a la renta", r.imp/n, "--c-imp"],
+      ["Ganancia", r.porProy, "--c-gan"]
+    ];
+    var pos = parts.filter(function(p){return p[1]>0;});
+    var sum = pos.reduce(function(a,p){return a+p[1];},0);
+    $("bar").innerHTML = pos.map(function(p){
+      var pct = p[1]/sum*100;
+      return '<div style="width:'+pct+'%;background:var('+p[2]+')" title="'+p[0]+': '+fmt(p[1])+'"><span>'+(pct>=7?Math.round(p[1]/cliente*100)+'%':'')+'</span></div>';
+    }).join("");
+    $("legend").innerHTML = parts.map(function(p){
+      var g = p[0]==="Ganancia";
+      var col = g ? (p[1]<0?"var(--neg)":"var(--pos)") : "inherit";
+      return '<div class="'+(g?'gan':'')+'"><i style="background:var('+p[2]+')"></i>'+p[0]+'<b style="color:'+col+'">'+fmt(p[1])+'</b></div>';
+    }).join("");
+  }
+
+  document.querySelectorAll("[data-igv]").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.igv = b.dataset.igv==="1";
+      document.querySelectorAll("[data-igv]").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
+      render();
+    });
+  });
+  document.querySelectorAll("[data-esc]").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.esc = b.dataset.esc;
+      document.querySelectorAll("[data-esc]").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
+      render();
+    });
+  });
+  ["precio","n"].forEach(function(id){ $(id).addEventListener("input", render); });
+
+  var sc = $("scale");
+  [0,2,4,6,8,10,12,14,16].forEach(function(v){
+    var t=document.createElement("div"); t.className="tick"; t.style.left="calc(100%*"+v+"/16)"; t.textContent=v; sc.appendChild(t);
+  });
+  render();
+})();
+</script>
+</body>
+</html>
